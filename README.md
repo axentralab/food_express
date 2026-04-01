@@ -2,6 +2,7 @@
 
 A production-ready food delivery platform built with Next.js 16, React 19, Framer Motion, and TypeScript. Features sophisticated animations, a modular architecture, and scalable design.
 
+🔗 **Live Demo**: [Food_Express](https://food-xpress-gules.vercel.app)  
 ## Quick Start
 
 ### Installation
