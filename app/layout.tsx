@@ -1,11 +1,16 @@
+
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-// import { Analytics } from '@vercel/analytics/next'
+import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/features/cart/cart-context'
+
 import './globals.css'
+import { Navbar } from '@/components/navbar/navbar'
+import { Footer } from '@/components/footer/footer'
 
 const geist = Geist({ subsets: ["latin"], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: '--font-mono' });
+
 
 export const metadata: Metadata = {
   title: 'FoodExpress - Fast Food Delivery',
@@ -17,12 +22,6 @@ export const metadata: Metadata = {
     description: 'Delicious food delivered fast',
     type: 'website',
   },
-  // icons: {
-  //   icon: [
-      
-  //   ],
-  
-  // },
 }
 
 export const viewport: Viewport = {
@@ -40,11 +39,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${geist.variable} ${geistMono.variable}`}>
-      <body className="font-sans antialiased">
+      <body className={`${geist.className} antialiased flex flex-col min-h-screen`}>
         <CartProvider>
-          {children}
+      
+          <Navbar />
+
+    
+          <main className="flex-1 w-full">
+            {children}
+          </main>
+
+     
+          <Footer />
         </CartProvider>
-        {/* <Analytics /> */}
+        
+        <Analytics />
       </body>
     </html>
   )

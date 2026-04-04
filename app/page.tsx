@@ -13,8 +13,8 @@ export default function Home() {
     <div className="min-h-screen bg-background">
  
       <UIProvider>
-        <Navbar />
-
+    
+    
         <main>
           <HeroSection />
            <FeaturedRestaurants></FeaturedRestaurants>
@@ -22,7 +22,6 @@ export default function Home() {
              <CTASection />
         </main>
 
-        <Footer />
       </UIProvider>
     </div>
   )
