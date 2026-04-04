@@ -309,7 +309,7 @@ function RatingBadge() {
 // 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#fafafa]">
+    <section className="relative flex items-center overflow-hidden bg-[#fafafa]">
       {/*   */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {/* Soft grid */}
@@ -327,7 +327,7 @@ export function HeroSection() {
       </div>
 
       {/* main content */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full py-24 sm:py-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full py-6 md:py-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* left side - content */}
         <motion.div
