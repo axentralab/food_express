@@ -23,15 +23,12 @@ interface NavLink {
   name: string
   href: string
 }
-
-
-
 const NAV_LINKS: NavLink[] = [
   { name: 'Home', href: '/' },
   { name: 'Restaurants', href: '/restaurants' },
   { name: 'Offers', href: '/offers' },
   { name: 'About Us', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Need Help?', href: '/contact' },
 ]
 
 //Magnetic Wrapper

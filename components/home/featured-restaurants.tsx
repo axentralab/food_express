@@ -76,8 +76,12 @@ function RestaurantCard({ restaurant, onViewMenu }: { restaurant: Restaurant; on
   const [imgError, setImgError] = useState(false)
 
   return (
-    <motion.div variants={CARD_VARIANTS} layout>
-      <TiltCard className="relative group cursor-pointer rounded-2xl overflow-hidden bg-white border border-slate-100/80 shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_48px_rgba(226,27,112,0.14)] transition-shadow duration-400">
+    <motion.div
+      onClick={() => onViewMenu(restaurant)}  
+    variants={CARD_VARIANTS} layout>
+      <TiltCard
+     
+      className="relative group cursor-pointer rounded-2xl overflow-hidden bg-white border border-slate-100/80 shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_48px_rgba(226,27,112,0.14)] transition-shadow duration-400">
         <div className="relative h-44 overflow-hidden">
           {!imgError ? (
             <img
@@ -314,7 +318,7 @@ const filtered = activeCategory === ALL
 
   return (
     <section className="bg-[#fafafa] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-10">
         <div>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
