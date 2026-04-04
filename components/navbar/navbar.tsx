@@ -146,7 +146,6 @@ function CartButton({ onClick, count }: { onClick: () => void; count: number }) 
 }
 
 // mobile drawer component
-
 function MobileDrawer({
   isOpen,
   onClose,

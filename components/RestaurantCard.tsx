@@ -42,10 +42,12 @@ export function RestaurantCard({
   restaurant,
   isFavorite,
   onToggleFavorite,
+  onViewMenu,
 }: {
   restaurant: Restaurant
   isFavorite: boolean
   onToggleFavorite: (id: string) => void
+  onViewMenu: () => void
 }) {
   const { ref, rx, ry, onMove, onLeave } = useTilt()
   const [imgErr, setImgErr] = useState(false)
@@ -60,6 +62,8 @@ export function RestaurantCard({
         onMouseLeave={onLeave}
         whileHover={{ y: -4 }}
         transition={{ y: { type: 'spring', stiffness: 260, damping: 22 } }}
+       
+        onClick={onViewMenu}
         className="group relative bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_rgba(226,27,112,0.13)] transition-shadow duration-350 cursor-pointer"
       >
         {/* Image */}

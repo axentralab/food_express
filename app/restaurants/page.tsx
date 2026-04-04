@@ -1,14 +1,18 @@
 'use client'
 
-import React, { useState, useMemo, useRef, useCallback, useEffect,
+import React, {
+  useState, useMemo, useRef, useCallback, useEffect,
 } from 'react'
-import { motion, AnimatePresence,
+import {
+  motion, AnimatePresence,
   type Variants,
 } from 'framer-motion'
-import {Search,Star,Zap,Bike,SlidersHorizontal,UtensilsCrossed,Sparkles,SlidersVertical,X,CheckCheck,
+import {
+  Search, Star, Zap, Bike, SlidersHorizontal, UtensilsCrossed, Sparkles, SlidersVertical, X, CheckCheck,
 } from 'lucide-react'
 import { restaurants, categories, type Restaurant } from '@/data/mock-data'
 import { RestaurantCard } from '@/components/RestaurantCard'
+import { RestaurantMenu } from '@/components/Restaurantmenu'
 
 type SortKey = 'default' | 'top_rated' | 'fastest' | 'free_delivery'
 type PriceRange = [number, number]
@@ -24,10 +28,10 @@ const PRICE_MIN = 0
 const PRICE_MAX = 50
 
 const SORT_OPTIONS: { key: SortKey; label: string; icon: React.ReactNode }[] = [
-  { key: 'default',       label: 'Recommended',     icon: <Sparkles size={13} /> },
-  { key: 'top_rated',     label: 'Top Rated',       icon: <Star size={13} /> },
-  { key: 'fastest',       label: 'Fastest Delivery',icon: <Zap size={13} /> },
-  { key: 'free_delivery', label: 'Free Delivery',   icon: <Bike size={13} /> },
+  { key: 'default', label: 'Recommended', icon: <Sparkles size={13} /> },
+  { key: 'top_rated', label: 'Top Rated', icon: <Star size={13} /> },
+  { key: 'fastest', label: 'Fastest Delivery', icon: <Zap size={13} /> },
+  { key: 'free_delivery', label: 'Free Delivery', icon: <Bike size={13} /> },
 ]
 
 const DEFAULT_FILTERS: FilterState = {
@@ -43,15 +47,15 @@ const GRID_VARIANTS: Variants = {
 }
 
 const CARD_VARIANTS: Variants = {
-  hidden:  { opacity: 0, y: 20, scale: 0.98 },
-  visible: { opacity: 1, y: 0,  scale: 1,   transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] } },
-  exit:    { opacity: 0, scale: 0.97,        transition: { duration: 0.18 } },
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, scale: 0.97, transition: { duration: 0.18 } },
 }
 
 const DRAWER_VARIANTS: Variants = {
-  hidden:  { y: '100%', opacity: 0.7 },
+  hidden: { y: '100%', opacity: 0.7 },
   visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 400, damping: 40 } },
-  exit:    { y: '100%', opacity: 0, transition: { duration: 0.26, ease: [0.4, 0, 1, 1] } },
+  exit: { y: '100%', opacity: 0, transition: { duration: 0.26, ease: [0.4, 0, 1, 1] } },
 }
 
 function cn(...classes: (string | boolean | undefined | null)[]) {
@@ -79,8 +83,8 @@ function SliderThumb({
         {isActive && (
           <motion.div
             initial={{ opacity: 0, y: 4, scale: 0.88 }}
-            animate={{ opacity: 1, y: 0,  scale: 1   }}
-            exit={{   opacity: 0, y: 4,  scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.88 }}
             transition={{ duration: 0.14 }}
             className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-black text-white whitespace-nowrap pointer-events-none"
             style={{
@@ -112,7 +116,7 @@ function SliderThumb({
         transition={{ type: 'spring', stiffness: 300, damping: 22 }}
         style={{ touchAction: 'none' }}
         className="w-[18px] h-[18px] rounded-full bg-white border-[2.5px] border-[#E21B70] cursor-grab active:cursor-grabbing"
-    
+
       />
     </div>
   )
@@ -126,11 +130,11 @@ function DualRangeSlider({
   value: PriceRange
   onChange: (v: PriceRange) => void
 }) {
-  const trackRef  = useRef<HTMLDivElement>(null)
-  const dragging  = useRef<'min' | 'max' | null>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const dragging = useRef<'min' | 'max' | null>(null)
   const [active, setActive] = useState<'min' | 'max' | null>(null)
 
-  const toPercent   = (v: number) => ((v - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100
+  const toPercent = (v: number) => ((v - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100
   const fromPercent = (p: number) =>
     Math.round(Math.max(PRICE_MIN, Math.min(PRICE_MAX, (p / 100) * (PRICE_MAX - PRICE_MIN) + PRICE_MIN)))
 
@@ -162,7 +166,7 @@ function DualRangeSlider({
     window.addEventListener('pointerup', onUp)
   }
 
-  const leftPct  = toPercent(value[0])
+  const leftPct = toPercent(value[0])
   const rightPct = toPercent(value[1])
 
   return (
@@ -178,7 +182,7 @@ function DualRangeSlider({
             background: 'linear-gradient(90deg, #E21B70 0%, #ff6aab 100%)',
           }}
         />
-        <SliderThumb pct={leftPct}  value={value[0]} isActive={active === 'min'} onPointerDown={startDrag('min')} />
+        <SliderThumb pct={leftPct} value={value[0]} isActive={active === 'min'} onPointerDown={startDrag('min')} />
         <SliderThumb pct={rightPct} value={value[1]} isActive={active === 'max'} onPointerDown={startDrag('max')} />
       </div>
 
@@ -245,8 +249,8 @@ function FilterPanel({ filters, setFilters, categoryCounts, onClose }: FilterPan
             {hasActiveFilters && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.82 }}
-                animate={{ opacity: 1, scale: 1    }}
-                exit={{   opacity: 0, scale: 0.82  }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.82 }}
                 whileTap={{ scale: 0.94 }}
                 onClick={resetFilters}
                 className="flex items-center gap-1 text-[11px] font-bold text-[#E21B70] px-2.5 py-1 rounded-full"
@@ -317,7 +321,7 @@ function FilterPanel({ filters, setFilters, categoryCounts, onClose }: FilterPan
         <div className="flex flex-col gap-0.5 max-h-52 overflow-y-auto pr-1" style={{ scrollbarWidth: 'none' }}>
           {allCategories.map(cat => {
             const isActive = filters.activeCategory === cat.name
-            const count    = categoryCounts[cat.name] ?? 0
+            const count = categoryCounts[cat.name] ?? 0
             return (
               <motion.button
                 key={cat.name}
@@ -426,8 +430,8 @@ function TopBar({ query, onQueryChange, resultCount, activeFilterCount, onFilter
             {query && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.75 }}
-                animate={{ opacity: 1, scale: 1    }}
-                exit={{   opacity: 0, scale: 0.75  }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.75 }}
                 onClick={() => onQueryChange('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center rounded-full bg-zinc-300/70 hover:bg-zinc-300 text-zinc-500 transition-colors"
               >
@@ -442,8 +446,8 @@ function TopBar({ query, onQueryChange, resultCount, activeFilterCount, onFilter
           <motion.div
             key={resultCount}
             initial={{ opacity: 0, scale: 0.82 }}
-            animate={{ opacity: 1, scale: 1    }}
-            exit={{   opacity: 0, scale: 0.82  }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.82 }}
             transition={{ duration: 0.18 }}
             className="hidden sm:flex shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-full"
             style={{
@@ -612,8 +616,9 @@ interface RestaurantGridProps {
   toggleFavorite: (id: string) => void
   query: string
   onReset: () => void
+  onViewMenu: (r: Restaurant) => void
 }
-function RestaurantGrid({ filtered, favorites, toggleFavorite, query, onReset }: RestaurantGridProps) {
+function RestaurantGrid({ filtered, favorites, toggleFavorite, query, onReset, onViewMenu }: RestaurantGridProps) {
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -633,6 +638,8 @@ function RestaurantGrid({ filtered, favorites, toggleFavorite, query, onReset }:
                 restaurant={r}
                 isFavorite={favorites.has(r.id)}
                 onToggleFavorite={toggleFavorite}
+                onViewMenu={() => onViewMenu(r)}
+
               />
             </motion.div>
           ))
@@ -643,9 +650,11 @@ function RestaurantGrid({ filtered, favorites, toggleFavorite, query, onReset }:
 }
 //main page component
 export default function RestaurantsPage() {
-  const [filters, setFilters]     = useState<FilterState>(DEFAULT_FILTERS)
-  const [drawerOpen, setDrawer]   = useState(false)
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+  const [drawerOpen, setDrawer] = useState(false)
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null)
+
 
   const toggleFavorite = useCallback((id: string) =>
     setFavorites(prev => {
@@ -653,9 +662,9 @@ export default function RestaurantsPage() {
       next.has(id) ? next.delete(id) : next.add(id)
       return next
     }),
-  [])
+    [])
 
-  // Category counts (relative to full, unfiltered dataset)
+  // Category counts for sidebar badges
   const categoryCounts = useMemo<Record<string, number>>(() => {
     const counts: Record<string, number> = { All: restaurants.length }
     restaurants.forEach(r => {
@@ -678,7 +687,7 @@ export default function RestaurantsPage() {
     })
 
     if (filters.sortKey === 'top_rated') list = [...list].sort((a, b) => b.rating - a.rating)
-    if (filters.sortKey === 'fastest')   list = [...list].sort((a, b) => a.deliveryTime - b.deliveryTime)
+    if (filters.sortKey === 'fastest') list = [...list].sort((a, b) => a.deliveryTime - b.deliveryTime)
 
     return list
   }, [filters])
@@ -694,7 +703,7 @@ export default function RestaurantsPage() {
       filters.sortKey !== 'default',
       filters.priceRange[0] !== PRICE_MIN || filters.priceRange[1] !== PRICE_MAX,
     ].filter(Boolean).length,
-  [filters])
+    [filters])
 
   return (
     <div className="min-h-screen" style={{ background: '#FAFAF8' }}>
@@ -767,9 +776,9 @@ export default function RestaurantsPage() {
               <AnimatePresence mode="wait">
                 <motion.p
                   key={`${filters.activeCategory}-${filters.sortKey}-${filtered.length}`}
-                  initial={{ opacity: 0, y: 5  }}
-                  animate={{ opacity: 1, y: 0  }}
-                  exit={{   opacity: 0, y: -5  }}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.22 }}
                   className="text-[13px] font-semibold text-zinc-500"
                 >
@@ -782,8 +791,8 @@ export default function RestaurantsPage() {
                 {activeFilterCount > 0 && (
                   <motion.button
                     initial={{ opacity: 0, scale: 0.82 }}
-                    animate={{ opacity: 1, scale: 1    }}
-                    exit={{   opacity: 0, scale: 0.82  }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.82 }}
                     whileTap={{ scale: 0.92 }}
                     onClick={resetAll}
                     className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold"
@@ -808,6 +817,7 @@ export default function RestaurantsPage() {
             toggleFavorite={toggleFavorite}
             query={filters.query}
             onReset={resetAll}
+            onViewMenu={r => setSelectedRestaurant(r)}
           />
 
           {/* Footer copy */}
@@ -824,6 +834,21 @@ export default function RestaurantsPage() {
         </main>
       </div>
 
+
+
+
+
+      {/* Restaurant menu modal */}
+      <AnimatePresence>
+        {selectedRestaurant && (
+          <RestaurantMenu
+            restaurant={selectedRestaurant}
+            onClose={() => setSelectedRestaurant(null)}
+          />
+        )}
+      </AnimatePresence>
+
+
       {/* Mobile bottom drawer */}
       <MobileDrawer
         open={drawerOpen}
@@ -832,6 +857,8 @@ export default function RestaurantsPage() {
         setFilters={setFilters}
         categoryCounts={categoryCounts}
       />
+
+
     </div>
   )
 }

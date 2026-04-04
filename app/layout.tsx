@@ -7,6 +7,7 @@ import { CartProvider } from '@/features/cart/cart-context'
 import './globals.css'
 import { Navbar } from '@/components/navbar/navbar'
 import { Footer } from '@/components/footer/footer'
+import { UIProvider } from '@/components/providers/ui-provider'
 
 const geist = Geist({ subsets: ["latin"], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: '--font-mono' });
@@ -40,19 +41,17 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${geist.variable} ${geistMono.variable}`}>
       <body className={`${geist.className} antialiased flex flex-col min-h-screen`}>
+  
         <CartProvider>
-      
+        <UIProvider>
           <Navbar />
-
-    
           <main className="flex-1 w-full">
             {children}
           </main>
-
-     
           <Footer />
+        </UIProvider>
         </CartProvider>
-        
+      
         <Analytics />
       </body>
     </html>
