@@ -9,6 +9,8 @@ export interface MenuItem {
   isPopular?: boolean
 }
 
+
+
 export interface Restaurant {
   id: string
   name: string
@@ -31,6 +33,136 @@ export interface Category {
   icon: string
   slug: string
 }
+
+export interface Offer {
+  id: string
+  title: string
+  description: string
+  code: string
+  minOrderAmount?: number
+  maxDiscount?: number
+  discountType: 'percentage' | 'fixed'
+  discountValue: number
+  restaurantId?: string
+  restaurantName?: string
+  image: string
+  expiryDate: string
+  tag: string
+}
+
+export const offers: Offer[] = [
+  {
+    id: 'off-1',
+    title: 'Welcome Gift',
+    description: 'Get 50% OFF on your very first order at FoodExpress!',
+    code: 'WELCOME50',
+    discountType: 'percentage',
+    minOrderAmount: 10,
+    maxDiscount: 25,
+    discountValue: 50,
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+    expiryDate: 'Dec 31, 2026',
+    tag: 'NEW USER'
+  },
+  {
+    id: 'off-2',
+    title: 'Pizza Studio Special',
+    description: 'Flat $5 OFF on all Artisan Pizzas!',
+    code: 'PIZZA5',
+    discountType: 'fixed',
+    discountValue: 5,
+    restaurantId: '2',
+    restaurantName: 'Artisan Pizza Studio',
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80',
+    expiryDate: 'Apr 20, 2026',
+    tag: 'RESTAURANT DEAL'
+  },
+  {
+    id: 'off-3',
+    title: 'Burger King Fest',
+    description: 'Get 20% OFF on all signature burgers this weekend!',
+    code: 'BURGER20',
+    discountType: 'percentage',
+    minOrderAmount: 15,
+    maxDiscount: 10,
+    discountValue: 20,
+    restaurantId: '5',
+    restaurantName: 'Burger King',
+    image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80',
+    expiryDate: 'May 15, 2026',
+    tag: 'LIMITED TIME'
+  },
+  {
+    id: 'off-4',
+    title: 'Healthy Bites',
+    description: 'Flat $8 OFF on fresh salads and smoothie bowls.',
+    code: 'HEALTHY8',
+    discountType: 'fixed',
+    minOrderAmount: 30,
+    discountValue: 8,
+    restaurantId: '10',
+    restaurantName: 'Green Garden',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80',
+    expiryDate: 'Jun 10, 2026',
+    tag: 'HEALTHY'
+  },
+  {
+    id: 'off-5',
+    title: 'Midnight Cravings',
+    description: 'Enjoy 30% OFF on all late-night orders after 11 PM.',
+    code: 'NIGHT30',
+    discountType: 'percentage',
+    minOrderAmount: 20,
+    maxDiscount: 15,
+    discountValue: 30,
+    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c170db76?w=800&q=80',
+    expiryDate: 'Jul 05, 2026',
+    tag: 'MIDNIGHT'
+  },
+  {
+    id: 'off-6',
+    title: 'Sushi Sunday',
+    description: 'Special 15% discount on all premium Sushi Platters.',
+    code: 'SUSHIFEST',
+    discountType: 'percentage',
+    minOrderAmount: 40,
+    maxDiscount: 20,
+    discountValue: 15,
+    restaurantId: '15',
+    restaurantName: 'Tokyo Dine',
+    image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80',
+    expiryDate: 'Apr 30, 2026',
+    tag: 'WEEKEND ONLY'
+  },
+  {
+    id: 'off-7',
+    title: 'Family Feast',
+    description: 'Flat $12 OFF on orders above $60. Feed the family!',
+    code: 'FAMILY12',
+    discountType: 'fixed',
+    minOrderAmount: 60,
+    discountValue: 12,
+    image: 'https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=800&q=80',
+    expiryDate: 'Aug 25, 2026',
+    tag: 'GLOBAL DEAL'
+  },
+  {
+    id: 'off-8',
+    title: 'Dessert Heaven',
+    description: 'Get 25% OFF on cakes and pastries at Sweet Delights.',
+    code: 'SWEET25',
+    discountType: 'percentage',
+    minOrderAmount: 12,
+    maxDiscount: 8,
+    discountValue: 25,
+    restaurantId: '25',
+    restaurantName: 'Sweet Delights',
+    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&q=80',
+    expiryDate: 'Sep 12, 2026',
+    tag: 'DESSERTS'
+  }
+]
+
 
 export const categories: Category[] = [
   {
@@ -81,6 +213,20 @@ export const categories: Category[] = [
     icon: '🍰',
     slug: 'desserts',
   },
+  {
+    id: '9',
+    name: 'Vegan',
+    icon: '🥗',
+    slug: 'vegan',
+  },
+  {
+    id: '10',
+    name: 'Drinks',
+    icon: '🍹' ,
+    slug: 'drinks'
+  }
+
+
 ]
 
 export const restaurants: Restaurant[] = [
@@ -714,6 +860,9 @@ export const restaurants: Restaurant[] = [
 
 
 ]
+
+
+
 
 export const getRestaurantById = (id: string) => {
   return restaurants.find((r) => r.id === id)

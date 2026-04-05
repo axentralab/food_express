@@ -291,7 +291,7 @@ function RatingBadge() {
       initial={{ opacity: 0, x: -40, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       transition={{ delay: 1.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute top-0 right-50 bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_8px_40px_rgba(255,177,0,0.18)] border border-white/60 px-4 py-3 flex items-center gap-2 z-20"
+      className="absolute  top-0 right-50 bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_8px_40px_rgba(255,177,0,0.18)] border border-white/60 px-4 py-3 hidden lg:flex items-center gap-2 z-20"
     >
       <div className="flex">
         {[...Array(5)].map((_, i) => (
@@ -423,8 +423,8 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* right side - visual elements */}
-        <div className="relative h-[540px] hidden lg:block">
+        {/* right side visual elements */}
+        <div className="relative h-[540px] ">
 
           {/* Central Hero Plate */}
           <motion.div
@@ -500,7 +500,9 @@ export function HeroSection() {
 
           {/* Floating Badges */}
           <LiveOrderPill />
-          <RatingBadge />
+          
+            <RatingBadge />
+      
 
           {/* CTA overlaid */}
           <motion.div
@@ -517,12 +519,12 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile CTA */}
+      {/* Mobile CTA
       <div className="lg:hidden absolute bottom-8 left-0 right-0 flex justify-center px-6">
         <MagneticButton className="w-full max-w-sm flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-[#E21B70] to-[#ff4d9e] text-white font-bold shadow-[0_8px_30px_rgba(226,27,112,0.4)]">
           Explore Restaurants <ArrowRight size={16} />
         </MagneticButton>
-      </div>
+      </div> */}
     </section>
   )
 }
