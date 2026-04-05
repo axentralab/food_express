@@ -35,7 +35,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: 400 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-card border-l border-card-border shadow-xl z-50 flex flex-col"
+            className="fixed right-0 top-0 h-screen w-full max-w-xl bg-card border-l border-card-border shadow-xl z-50 flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-card-border sticky top-0 bg-card">

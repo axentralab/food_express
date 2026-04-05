@@ -8,6 +8,7 @@ import './globals.css'
 import { Navbar } from '@/components/navbar/navbar'
 import { Footer } from '@/components/footer/footer'
 import { UIProvider } from '@/components/providers/ui-provider'
+import { OfferModal } from '@/components/offer-modal'
 
 const geist = Geist({ subsets: ["latin"], variable: '--font-sans' });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: '--font-mono' });
@@ -44,6 +45,8 @@ export default function RootLayout({
   
         <CartProvider>
         <UIProvider>
+     
+            <OfferModal />
           <Navbar />
           <main className="flex-1 w-full">
             {children}

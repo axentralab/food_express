@@ -251,7 +251,7 @@ export function TestimonialsSection() {
         className="relative"
         style={{ transform: 'rotate(-2deg)', transformOrigin: 'center' }}
       >
-        {/* Left + Right gradient masks */}
+        {/* Left Right gradient  */}
         <div
           className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
           style={{

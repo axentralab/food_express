@@ -6,17 +6,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { categories, restaurants, type Restaurant, type Category } from '@/data/mock-data'
 import Link from 'next/link'
 
-import { RestaurantCard } from '@/components/RestaurantCard' 
+import { RestaurantCard } from '@/components/RestaurantCard'
 import { RestaurantMenu } from '@/components/Restaurantmenu'
+import { cn } from '@/lib/utils'
 
 // Constants
 const ALL = 'All'
 
 const GRID_VARIANTS: Variants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.08 } 
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 }
   },
   exit: { opacity: 0, transition: { duration: 0.2 } }
 }
@@ -51,7 +52,7 @@ function EmptyState({ category }: { category: string }) {
 //  Category Slider
 function CategorySlider({ active, onChange }: { active: string; onChange: (name: string) => void }) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  
+
   const scroll = (dir: 'left' | 'right') => {
     scrollRef.current?.scrollBy({ left: dir === 'left' ? -240 : 240, behavior: 'smooth' })
   }
@@ -67,7 +68,7 @@ function CategorySlider({ active, onChange }: { active: string; onChange: (name:
         <button
           key={dir}
           onClick={() => scroll(dir as 'left' | 'right')}
-          className={`absolute top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center hover:bg-slate-50 transition-opacity hidden md:flex ${dir === 'left' ? '-left-4' : '-right-4'}`}
+          className={`absolute top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-pink-100/70 shadow-md border border-slate-500 flex items-center justify-center hover:bg-slate-50 transition-opacity  md:flex ${dir === 'left' ? '-left-8' : '-right-8'}`}
         >
           {dir === 'left' ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
         </button>
@@ -85,14 +86,13 @@ function CategorySlider({ active, onChange }: { active: string; onChange: (name:
               key={cat.id}
               onClick={() => onChange(cat.name)}
               whileTap={{ scale: 0.96 }}
-              className={`relative shrink-0 flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
-                isActive ? 'text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-[#E21B70]/30'
-              }`}
+              className={`relative shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-md font-bold transition-all ${isActive ? 'text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-[#E21B70]/30'
+                }`}
             >
               {isActive && (
                 <motion.span
                   layoutId="active-pill"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-[#E21B70] to-[#f09c00]"
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-[#E21B70] to-[#ff4d9e] text-white shadow-md"
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
@@ -110,7 +110,7 @@ function CategorySlider({ active, onChange }: { active: string; onChange: (name:
 export function FeaturedRestaurants() {
   const [activeCategory, setActiveCategory] = useState<string>(ALL)
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null)
- 
+
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
 
   const toggleFavorite = (id: string) => {
@@ -121,19 +121,19 @@ export function FeaturedRestaurants() {
       return next
     })
   }
-  
+
   // Filtering Logic
   const filtered = useMemo(() => {
-    const list = activeCategory === ALL 
-      ? restaurants 
+    const list = activeCategory === ALL
+      ? restaurants
       : restaurants.filter((r) => r.cuisineType === activeCategory)
     return list.slice(0, 9)
   }, [activeCategory])
 
   return (
-    <section className="bg-[#fafafa] min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        
+    <section className="bg-[#fafafa] min-h-screen py-8 md:py-10">
+      <div className="max-w-7xl mx-auto px-4 space-y-4 ">
+
         {/* Top Section: Category Filter */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
@@ -143,29 +143,54 @@ export function FeaturedRestaurants() {
           <CategorySlider active={activeCategory} onChange={setActiveCategory} />
         </div>
 
-        {/* Middle Section: Header */}
+        {/*Header */}
         <div className="flex items-end justify-between">
           <div>
-            <motion.h2 
+            <motion.h2
               key={activeCategory}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-3xl font-black text-slate-900"
+              className="text-3xl  md:text-4xl  font-black tracking-tight "
             >
-              {activeCategory === ALL ? 'All Restaurants' : `${activeCategory} Specials`}
+              {activeCategory === ALL ? (
+                <>
+                  Featured{' '}
+                  <span
+                    style={{
+                      background: 'linear-gradient(135deg, #E21B70 0%, #ff4d9e 50%, #FFB100 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                  >
+                    Restaurants
+                  </span>
+                </>
+              ) : (
+                <>
+                  {activeCategory}{' '}
+                  <span
+                    style={{
+                      background: 'linear-gradient(135deg, #E21B70 0%, #ff4d9e 50%, #FFB100 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                  >
+                    Specials
+                  </span>
+                </>
+              )}
             </motion.h2>
-            <p className="text-slate-400 text-sm font-medium mt-1">
-              Found {filtered.length} {filtered.length === 1 ? 'place' : 'places'} nearby
-            </p>
           </div>
           <Link href="/restaurants">
-            <button className="text-sm font-bold text-[#E21B70] hover:underline flex items-center gap-1">
+            <button className="text-md font-bold text-[#E21B70] hover:underline flex items-center gap-1">
               View All <ChevronRight size={14} />
             </button>
           </Link>
         </div>
 
-        {/* Bottom Section: Restaurant Grid */}
+        {/*Restaurant Grid */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -177,12 +202,12 @@ export function FeaturedRestaurants() {
           >
             {filtered.length > 0 ? (
               filtered.map((r) => (
-                <RestaurantCard 
-                  key={r.id} 
-                  restaurant={r} 
+                <RestaurantCard
+                  key={r.id}
+                  restaurant={r}
                   isFavorite={favorites.has(r.id)}
                   onToggleFavorite={() => toggleFavorite(r.id)}
-                  onViewMenu={() => setSelectedRestaurant(r)} 
+                  onViewMenu={() => setSelectedRestaurant(r)}
                 />
               ))
             ) : (
@@ -195,9 +220,9 @@ export function FeaturedRestaurants() {
       {/* Restaurant Menu Modal */}
       <AnimatePresence>
         {selectedRestaurant && (
-          <RestaurantMenu 
-            restaurant={selectedRestaurant} 
-            onClose={() => setSelectedRestaurant(null)} 
+          <RestaurantMenu
+            restaurant={selectedRestaurant}
+            onClose={() => setSelectedRestaurant(null)}
           />
         )}
       </AnimatePresence>
